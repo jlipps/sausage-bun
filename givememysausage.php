@@ -11,6 +11,12 @@ function main($argv)
     $msg = <<<EOF
 Welcome to the Sausage installer!
 ---------------------------------
+
+    ( \                 / )
+     \ \.-------------./ /
+      \(               )/
+        `.___________.'
+---------------------------------
 EOF;
     out($msg, 'info');
     out("- Checking initial system requirements...", NULL, false);

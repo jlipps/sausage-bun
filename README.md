@@ -12,3 +12,13 @@ for the most smooth experience.
 ```
 curl -s https://raw.github.com/jlipps/sausage-bun/master/givememysausage.php | php
 ```
+
+Sausage
+-------
+```
+   
+    ( \                 / )
+     \ \.-------------./ /
+      \(               )/
+        `.___________.'
+```
