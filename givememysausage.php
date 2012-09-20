@@ -1,5 +1,6 @@
 <?php
 
+
 $COMPOSER_INSTALLER = "http://getcomposer.org/installer";
 $DEMO_URL = "https://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
 $BASE = getcwd();
@@ -20,30 +21,52 @@ Welcome to the Sausage installer!
 ---------------------------------
 EOF;
     out($msg, 'info');
-    out("- Checking initial system requirements...", NULL, false);
     checkInitialRequirements();
-    out("done", 'success');
     startComposer();
     installPackages();
     configureSauce();
     downloadDemo();
     out("You're all set! Try running 'vendor/bin/phpunit WebDriverDemo.php'", 'success');
+    out('');
 }
 
 function checkInitialRequirements()
 {
-    $fail = false;
+    out("- Checking initial system requirements...", NULL, false);
+    $errors = array();
+    $solutions = array();
+
     if(!ini_get('allow_url_fopen')) {
-        out("Looks like you don't have fopen() URL support. To enable this set allow_url_fopen=1 in your php.ini", 'error');
-        $fail = true;
-    }
-    if(ini_get('safe_mode')) {
-        out("Looks like you have safe mode enabled. Let's live a little more dangerously. Set safe_mode=0 in your php.ini", 'error');
-        $fail = true;
+        $errors['fopen'] = "You don't have fopen() URL support.";
+        $solutions['fopen'] = "Set allow_url_fopen=1 in your php.ini";
     }
 
-    if ($fail) {
+    if(ini_get('safe_mode')) {
+        $errors['safe_mode'] = "You have safe mode enabled.";
+        $solutions['safe_mode'] = "Set safe_mode=0 in your php.ini";
+    }
+
+    $extensions = array('curl', 'dom', 'pcre', 'Phar', 'SPL', 'Reflection');
+    foreach ($extensions as $ext) {
+        if (!extension_loaded($ext)) {
+            $errors[$ext] = "You don't have the $ext PHP extension loaded.";
+            $solutions[$ext] = "Install the $ext extension.";
+        }
+    }
+
+    if (count($errors)) {
+        out("failed", 'error');
+        out('');
+        out("Your system didn't meet our requirements check. Here's what's wrong:", 'info');
+        foreach ($errors as $err_type => $error) {
+            $solution = isset($solutions[$err_type]) ? $solutions[$err_type] : NULL;
+            out("- $error", 'error');
+            if ($solution)
+                out("  - To fix: $solution", 'info');
+        }
         exit(1);
+    } else {
+        out("done", 'success');
     }
 }
 
