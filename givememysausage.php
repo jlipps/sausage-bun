@@ -18,6 +18,7 @@ EOF;
     out("done", 'success');
     startComposer();
     installPackages();
+    configureSauce();
     downloadDemo();
     out("You're all set! Try running 'vendor/bin/phpunit WebDriverDemo.php'", 'success');
 }
@@ -128,6 +129,21 @@ EOF;
             exit($exitcode);
         }
         out("done", 'success');
+    }
+}
+
+function configureSauce()
+{
+    global $BASE;
+    out("- Configuring Sauce...", NULL, false);
+    $u = getenv('SAUCE_USERNAME');
+    $a = getenv('SAUCE_ACCESS_KEY');
+    list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $u $a");
+    if ($exitcode !== 0) {
+        out('failed', 'warning');
+        out("Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME API_KEY manually.");
+    } else {
+        out('done', 'success');
     }
 }
 
