@@ -140,8 +140,8 @@ function configureSauce()
     $a = getenv('SAUCE_ACCESS_KEY');
     list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $u $a");
     if ($exitcode !== 0) {
-        out('failed', 'warning');
-        out("Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME API_KEY manually.");
+        out('failed', 'error');
+        out("  Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME API_KEY manually.", 'info');
     } else {
         out('done', 'success');
     }
