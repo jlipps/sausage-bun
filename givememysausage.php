@@ -14,8 +14,9 @@ Welcome to the Sausage installer!
 
     ( \                 / )
      \ \.-------------./ /
-      \(               )/
+      \(    hot dog!   )/
         `.___________.'
+
 ---------------------------------
 EOF;
     out($msg, 'info');
