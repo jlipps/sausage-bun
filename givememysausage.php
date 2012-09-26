@@ -38,6 +38,7 @@ EOF;
     configureSauce();
     downloadDemo();
     out("You're all set! Try running 'vendor/bin/phpunit WebDriverDemo.php'", 'success');
+    out("(Then load https://saucelabs.com/account to see your tests running)", 'success');
     out('');
 }
 
