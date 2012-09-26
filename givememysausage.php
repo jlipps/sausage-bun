@@ -5,6 +5,17 @@ $COMPOSER_INSTALLER = "http://getcomposer.org/installer";
 $DEMO_URL = "https://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
 $BASE = getcwd();
 
+$WIN_UNAMES = array(
+    'MINGW32_NT-6.0',
+    'UWIN-W7',
+    'WIN32',
+    'WINNT',
+    'Windows'
+);
+
+$IS_WIN = in_array(php_uname('s'), $WIN_UNAMES);
+$PHP_BIN = $IS_WIN ? 'php.exe' : 'php';
+
 main($argv);
 
 function main($argv)
@@ -72,13 +83,13 @@ function checkInitialRequirements()
 
 function startComposer()
 {
-    global $COMPOSER_INSTALLER, $BASE;
+    global $COMPOSER_INSTALLER, $BASE, $PHP_BIN;
     out("- Downloading Composer install script...", NULL, false);
     $php = file_get_contents($COMPOSER_INSTALLER);
     out("done", 'success');
     file_put_contents("$BASE/getcomposer.php", $php);
     out("- Installing Composer...", NULL, false);
-    list($output, $exitcode) = runProcess("php $BASE/getcomposer.php");
+    list($output, $exitcode) = runProcess("$PHP_BIN $BASE/getcomposer.php");
     if ($exitcode !== 0) {
         $msg = <<<EOF
 Uh oh! Installing Composer didn't go smoothly.
@@ -99,7 +110,7 @@ EOF;
         unlink("$BASE/getcomposer.php");
     }
     out("- Making sure Composer is up to date...", NULL, false);
-    list($output, $exitcode) = runProcess("php $BASE/composer.phar self-update");
+    list($output, $exitcode) = runProcess("$PHP_BIN $BASE/composer.phar self-update");
     if ($exitcode !== 0) {
         out('failed', 'error');
         out("Darn. Composer failed its own self-update! Here's what it had to say:");
@@ -111,7 +122,7 @@ EOF;
 
 function installPackages()
 {
-    global $BASE;
+    global $BASE, $PHP_BIN;
     out("- Downloading and unpacking Sausage and dependencies (this may take a while)...", NULL, false);
 
 $json = <<<EOF
@@ -123,7 +134,7 @@ $json = <<<EOF
 }
 EOF;
     file_put_contents("$BASE/composer.json", $json);
-    list($output, $exitcode) = runProcess("php $BASE/composer.phar install");
+    list($output, $exitcode) = runProcess("$PHP_BIN $BASE/composer.phar install");
     if ($exitcode !== 0) {
         $msg = <<<EOF
 Oops. Installing the Sausage and PHPUnit packages didn't work.
@@ -142,7 +153,7 @@ EOF;
 
     if (is_dir("$BASE/vendor")) {
         out("- Updating packages...", NULL, false);
-        list($output, $exitcode) = runProcess("php $BASE/composer.phar update");
+        list($output, $exitcode) = runProcess("$PHP_BIN $BASE/composer.phar update");
         if ($exitcode !== 0) {
             $msg = <<<EOF
 Uh oh. There was a problem updating the Composer packages. The only reason we
