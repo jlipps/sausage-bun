@@ -3,6 +3,11 @@ sausage-bun
 
 A wrapper script that checks system readiness for [Sausage](http://github.com/jlipps/sausage) and gets it all installed
 
+License
+-------
+Sausage is available under the Apache 2 license. See `LICENSE.APACHE2` for more
+details.
+
 Get the sausage
 ---
 Get into a fresh directory and try this baby. You might want to have the
