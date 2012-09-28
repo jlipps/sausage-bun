@@ -10,7 +10,8 @@ $WIN_UNAMES = array(
     'UWIN-W7',
     'WIN32',
     'WINNT',
-    'Windows'
+    'Windows',
+    'Windows NT'
 );
 
 $IS_WIN = in_array(php_uname('s'), $WIN_UNAMES);
