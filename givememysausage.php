@@ -129,9 +129,8 @@ function installPackages()
 $json = <<<EOF
 {
     "require": {
-        "sauce/sausage": "dev-master"
-    },
-    "minimum-stability": "dev"
+        "sauce/sausage": ">=0.4.0"
+    }
 }
 EOF;
     file_put_contents("$BASE/composer.json", $json);
