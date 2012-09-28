@@ -2,7 +2,7 @@
 
 
 $COMPOSER_INSTALLER = "http://getcomposer.org/installer";
-$DEMO_URL = "https://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
+$DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
 $BASE = getcwd();
 
 $WIN_UNAMES = array(
