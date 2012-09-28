@@ -51,7 +51,7 @@ function checkPHP()
     out("- Checking for PHP...", NULL, false);
     if (!is_file($PHP_BIN)) {
         out("failed", 'error');
-        out('');
+        out("Could not find any PHP binary at $PHP_BIN. Please make sure PHP is installed!");
         exit(1);
     } else {
         out("done", 'success');
