@@ -14,7 +14,8 @@ $WIN_UNAMES = array(
 );
 
 $IS_WIN = in_array(php_uname('s'), $WIN_UNAMES);
-$PHP_BIN = $IS_WIN ? 'php.exe' : 'php';
+$PHP_BIN = PHP_BINDIR.($IS_WIN ? '\\' : '/').'php'.($IS_WIN ? '.exe' : '');
+
 
 main($argv);
 
@@ -32,6 +33,7 @@ Welcome to the Sausage installer!
 ---------------------------------
 EOF;
     out($msg, 'info');
+    checkPHP();
     checkInitialRequirements();
     startComposer();
     installPackages();
@@ -41,6 +43,19 @@ EOF;
     out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
     out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
     out('');
+}
+
+function checkPHP()
+{
+    global $PHP_BIN;
+    out("- Checking for PHP...", NULL, false);
+    if (!is_file($PHP_BIN)) {
+        out("failed", 'error');
+        out('');
+        exit(1);
+    } else {
+        out("done", 'success');
+    }
 }
 
 function checkInitialRequirements()
