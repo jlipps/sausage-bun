@@ -3,6 +3,7 @@
 
 $COMPOSER_INSTALLER = "http://getcomposer.org/installer";
 $DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
+$RC_DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
 $BASE = getcwd();
 
 $WIN_UNAMES = array(
@@ -207,9 +208,10 @@ function configureSauce()
 
 function downloadDemo()
 {
-    global $DEMO_URL, $BASE;
-    out("- Downloading demo test file...", NULL, false);
+    global $DEMO_URL, $RC_DEMO_URL, $BASE;
+    out("- Downloading demo test files...", NULL, false);
     file_put_contents("$BASE/WebDriverDemo.php", file_get_contents($DEMO_URL));
+    file_put_contents("$BASE/SeleniumRCDemo.php", file_get_contents($RC_DEMO_URL));
     out("done", 'success');
 }
 
