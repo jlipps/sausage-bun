@@ -148,7 +148,7 @@ function installPackages()
 $json = <<<EOF
 {
     "require": {
-        "sauce/sausage": ">=0.4.2"
+        "sauce/sausage": ">=0.5.0"
     }
 }
 EOF;
@@ -169,6 +169,7 @@ EOF;
         exit($exitcode);
     }
     out("done", 'success');
+    out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
 
     if (is_dir("$BASE/vendor")) {
         out("- Updating packages...", NULL, false);
