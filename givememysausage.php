@@ -42,6 +42,7 @@ EOF;
     configureSauce();
     downloadDemo();
     out("You're all set! Try running 'vendor/bin/paraunit -p8 --path=WebDriverDemo.php'", 'success');
+    out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
     out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
     out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
     out('');
