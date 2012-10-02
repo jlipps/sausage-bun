@@ -23,6 +23,8 @@ main($argv);
 
 function main($argv)
 {
+    $opts = getopt("m::");
+    $minimal_run = isset($opts['m']);
     $msg = <<<EOF
 Welcome to the Sausage installer!
 ---------------------------------
@@ -39,12 +41,16 @@ EOF;
     checkInitialRequirements();
     startComposer();
     installPackages();
-    configureSauce();
-    downloadDemo();
-    out("You're all set! Try running 'vendor/bin/paraunit -p8 --path=WebDriverDemo.php'", 'success');
-    out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
-    out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
-    out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
+    if (!$minimal_run) {
+        configureSauce();
+        downloadDemo();
+        out("You're all set! Try running 'vendor/bin/paraunit -p8 --path=WebDriverDemo.php'", 'success');
+        out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
+        out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
+        out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
+    } else {
+        out("Sausage successfuly set up!", 'success');
+    }
     out('');
 }
 
