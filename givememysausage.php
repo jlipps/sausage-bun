@@ -104,14 +104,17 @@ function checkInitialRequirements()
 function startComposer()
 {
     global $COMPOSER_INSTALLER, $BASE, $PHP_BIN;
-    out("- Downloading Composer install script...", NULL, false);
-    $php = file_get_contents($COMPOSER_INSTALLER);
-    out("done", 'success');
-    file_put_contents("$BASE/getcomposer.php", $php);
-    out("- Installing Composer...", NULL, false);
-    list($output, $exitcode) = runProcess("$PHP_BIN $BASE/getcomposer.php");
-    if ($exitcode !== 0) {
-        $msg = <<<EOF
+    if (is_file("$BASE/composer.phar")) {
+        out(" - Composer already installed", 'success');
+    } else {
+        out("- Downloading Composer install script...", NULL, false);
+        $php = file_get_contents($COMPOSER_INSTALLER);
+        out("done", 'success');
+        file_put_contents("$BASE/getcomposer.php", $php);
+        out("- Installing Composer...", NULL, false);
+        list($output, $exitcode) = runProcess("$PHP_BIN $BASE/getcomposer.php");
+        if ($exitcode !== 0) {
+            $msg = <<<EOF
 Uh oh! Installing Composer didn't go smoothly.
 Composer has a variety of PHP requirements, so you might need to update your
 system or your php.ini file in order to get it to work. We'll show you the
@@ -119,13 +122,14 @@ ouput from the Composer install attempt below. Check it out to see how you
 might be able to see what's going on and fix it (then retry installing Sausage):
 ==============================================================================
 EOF;
-        out('failed', 'error');
-        out($msg, "error");
-        out($output);
-        out("==============================================================================", 'error');
-        exit($exitcode);
+            out('failed', 'error');
+            out($msg, "error");
+            out($output);
+            out("==============================================================================", 'error');
+            exit($exitcode);
+        }
+        out("done", 'success');
     }
-    out("done", 'success');
     if (is_file("$BASE/getcomposer.php")) {
         unlink("$BASE/getcomposer.php");
     }
