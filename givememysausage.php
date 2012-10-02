@@ -43,7 +43,7 @@ EOF;
     checkPHP();
     checkInitialRequirements();
     startComposer();
-    installPackages();
+    installPackages($minimal_run);
     if (!$minimal_run) {
         configureSauce();
         downloadDemo();
@@ -153,7 +153,7 @@ EOF;
     out('done', 'success');
 }
 
-function installPackages()
+function installPackages($minimal_run = false)
 {
     global $BASE, $PHP_BIN;
     out("- Downloading and unpacking Sausage and dependencies (this may take a while)...", NULL, false);
@@ -182,7 +182,8 @@ EOF;
         exit($exitcode);
     }
     out("done", 'success');
-    out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
+    if (!$minimal_run)
+        out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
 
     if (is_dir("$BASE/vendor")) {
         out("- Updating packages...", NULL, false);
