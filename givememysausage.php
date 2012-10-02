@@ -105,7 +105,7 @@ function startComposer()
 {
     global $COMPOSER_INSTALLER, $BASE, $PHP_BIN;
     if (is_file("$BASE/composer.phar")) {
-        out(" - Composer already installed", 'success');
+        out("- Composer already installed", 'success');
     } else {
         out("- Downloading Composer install script...", NULL, false);
         $php = file_get_contents($COMPOSER_INSTALLER);
