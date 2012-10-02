@@ -25,10 +25,11 @@ function main($argv)
 {
     $opts = getopt("m::");
     $minimal_run = isset($opts['m']);
-    $msg = <<<EOF
+    $msg1 = <<<EOF
 Welcome to the Sausage installer!
 ---------------------------------
-
+EOF;
+    $msg2 = <<<EOF
     ( \                 / )
      \ \.-------------./ /
       \(    hot dog!   )/
@@ -36,7 +37,9 @@ Welcome to the Sausage installer!
 
 ---------------------------------
 EOF;
-    out($msg, 'info');
+    out($msg1, 'info');
+    if (!$minimal_run)
+        out($msg2, 'info');
     checkPHP();
     checkInitialRequirements();
     startComposer();
