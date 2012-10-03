@@ -216,7 +216,7 @@ function configureSauce()
     list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $u $a");
     if ($exitcode !== 0) {
         out('failed', 'error');
-        out("  Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME API_KEY manually.", 'info');
+        out("  Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME ACCESS_KEY manually.", 'info');
     } else {
         out('done', 'success');
     }
