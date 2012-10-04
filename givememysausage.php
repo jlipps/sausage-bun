@@ -86,7 +86,7 @@ function checkInitialRequirements()
         $solutions['safe_mode'] = "Set safe_mode=0 in your php.ini";
     }
 
-    $extensions = array('curl', 'dom', 'pcre', 'Phar', 'SPL', 'Reflection');
+    $extensions = array('curl', 'dom', 'pcre', 'Phar', 'SPL', 'Reflection', 'openssl');
     foreach ($extensions as $ext) {
         if (!extension_loaded($ext)) {
             $errors[$ext] = "You don't have the $ext PHP extension loaded.";
