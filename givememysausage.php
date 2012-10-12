@@ -3,7 +3,7 @@
 
 $COMPOSER_INSTALLER = "http://getcomposer.org/installer";
 $DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
-$RC_DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
+$RC_DEMO_URL = "http://raw.github.com/jlipps/sausage/master/SeleniumRCDemo.php";
 $APP_DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemoShootout.php";
 $BASE = getcwd();
 
