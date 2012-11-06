@@ -57,7 +57,6 @@ EOF;
     if (!$minimal_run) {
         configureSauce();
         downloadDemo();
-        //out("You're all set! Try running 'vendor/bin/paraunit --processes=8 --path=WebDriverDemo.php'", 'success');
         out("You're all set!");
         if ($SAUCE_TUTORIAL != 'tutorial') {
         		out("Try running 'vendor/bin/paraunit --processes=8 --path=WebDriverDemo.php'", 'success');
