@@ -18,11 +18,9 @@ $WIN_UNAMES = array(
 $IS_WIN = in_array(php_uname('s'), $WIN_UNAMES);
 $PHP_BIN = PHP_BINDIR.($IS_WIN ? '\\' : '/').'php'.($IS_WIN ? '.exe' : '');
 
-if ($IS_WIN) {
-	if (count($argv) == 3) {
-		$SAUCE_USERNAME = $argv[1];
-		$SAUCE_ACCESS_KEY = $argv[2];
-	}
+if (count($argv) == 3) {
+	$SAUCE_USERNAME = $argv[1];
+	$SAUCE_ACCESS_KEY = $argv[2];
 }
 
 main($argv);
@@ -237,10 +235,11 @@ function configureSauce()
 
     out("- Configuring Sauce...", NULL, false);
 
-    $u = ($IS_WIN ? $SAUCE_USERNAME : getenv('SAUCE_USERNAME'));
-    $a = ($IS_WIN ? $SAUCE_ACCESS_KEY : getenv('SAUCE_ACCESS_KEY'));
+    //$u = ($IS_WIN ? $SAUCE_USERNAME : getenv('SAUCE_USERNAME'));
+    //$a = ($IS_WIN ? $SAUCE_ACCESS_KEY : getenv('SAUCE_ACCESS_KEY'));
 
-    list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $u $a");
+    //list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $u $a");
+    list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $SAUCE_USERNAME $SAUCE_ACCESS_KEY");
 	if ($exitcode !== 0) {
 		out('failed', 'error');
 		$FIX = TRUE;
