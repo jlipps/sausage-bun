@@ -19,12 +19,9 @@ $IS_WIN = in_array(php_uname('s'), $WIN_UNAMES);
 $PHP_BIN = PHP_BINDIR.($IS_WIN ? '\\' : '/').'php'.($IS_WIN ? '.exe' : '');
 
 if ($IS_WIN) {
-    if (count($argv) == 3 || count($argv) == 4) {
+    if (count($argv) == 3) {
         $SAUCE_USERNAME = $argv[1];
         $SAUCE_ACCESS_KEY = $argv[2];
-        if (count($argv) == 4) {
-            $SAUCE_TUTORIAL = $argv[3];
-        }
     }
 }
 
@@ -32,21 +29,26 @@ main($argv);
 
 function main($argv)
 {
-    global $SAUCE_TUTORIAL;
+    global $IS_WIN, $FIX;
 
     $opts = getopt("m::");
     $minimal_run = isset($opts['m']);
     $msg1 = <<<EOF
 Welcome to the Sausage installer!
+\n
 ---------------------------------
+\n
 EOF;
+    out("\n");
     $msg2 = <<<EOF
     ( \                 / )
      \ \.-------------./ /
       \(    hot dog!   )/
         `.___________.'
 
+\n
 ---------------------------------
+\n
 EOF;
     out($msg1, 'info');
     if (!$minimal_run)
@@ -58,12 +60,16 @@ EOF;
     if (!$minimal_run) {
         configureSauce();
         downloadDemo();
-        out("You're all set!");
-        if ($SAUCE_TUTORIAL != 'tutorial') {
-                out("Try running 'vendor/bin/paraunit --processes=8 --path=WebDriverDemo.php'", 'success');
-                out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
-                out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
-                out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
+        if (!$FIX) {
+            out("- You're all set!");
+        } else {
+            out("- Oops! Found an issue...please fix the issue and try again!");
+        }
+        if (!$IS_WIN) {
+            out("Try running 'vendor/bin/paraunit --processes=8 --path=WebDriverDemo.php'", 'success');
+            out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
+            out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
+            out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
         }
     } else {
         out("Sausage successfuly set up!", 'success');
@@ -169,8 +175,7 @@ EOF;
 
 function installPackages($minimal_run = false)
 {
-    global $BASE, $PHP_BIN;
-    global $SAUCE_TUTORIAL;
+    global $BASE, $PHP_BIN, $IS_WIN;
     out("- Downloading and unpacking Sausage and dependencies (this may take a while)...", NULL, false);
 
 $json = <<<EOF
@@ -197,8 +202,10 @@ EOF;
         exit($exitcode);
     }
     out("done", 'success');
-    if (!$minimal_run && $SAUCE_TUTORIAL != 'tutorial') {
-        out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
+    if (!$minimal_run) {
+        if (!$IS_WIN) {
+            out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
+        }
     }
     if (is_dir("$BASE/vendor")) {
         out("- Updating packages...", NULL, false);
@@ -226,6 +233,7 @@ function configureSauce()
 {
     global $BASE;
     global $IS_WIN, $SAUCE_USERNAME, $SAUCE_ACCESS_KEY;
+    global $FIX;
 
     out("- Configuring Sauce...", NULL, false);
 
@@ -235,7 +243,12 @@ function configureSauce()
     list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $u $a");
     if ($exitcode !== 0) {
         out('failed', 'error');
-        out("  Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME ACCESS_KEY manually.", 'info');
+        $FIX = TRUE;
+        if (!$IS_WIN) {
+            out("  Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME ACCESS_KEY manually.", 'info');
+        } else {
+            out("  Sauce configuration failed. Usage: php givememysausage.php <sauceusername> <sauceaccesskey>", 'info');
+        }
     } else {
         out('done', 'success');
     }
