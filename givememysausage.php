@@ -29,8 +29,8 @@ $IS_WIN = in_array(php_uname('s'), $WIN_UNAMES);
 $PHP_BIN = PHP_BINDIR.($IS_WIN ? '\\' : '/').'php'.($IS_WIN ? '.exe' : '');
 
 if (count($argv) == 3) {
-	$SAUCE_USERNAME = $argv[1];
-	$SAUCE_ACCESS_KEY = $argv[2];
+    $SAUCE_USERNAME = $argv[1];
+    $SAUCE_ACCESS_KEY = $argv[2];
 }
 
 main($argv);
@@ -47,7 +47,7 @@ Welcome to the Sausage installer!
 ---------------------------------
 \n
 EOF;
-	out("\n");
+    out("\n");
     $msg2 = <<<EOF
     ( \                 / )
      \ \.-------------./ /
@@ -68,16 +68,16 @@ EOF;
     if (!$minimal_run) {
         configureSauce();
         downloadDemo();
-		if (!$FIX) {
-			out("- You're all set!");
-		} else {
-			out("- Oops! Found an issue...please fix the issue and try again!");
-		}
+        if (!$FIX) {
+            out("- You're all set!");
+        } else {
+            out("- Oops! Found an issue...please fix the issue and try again!");
+        }
         if (!$IS_WIN) {
-        		out("Try running 'vendor/bin/paraunit --processes=8 --path=WebDriverDemo.php'", 'success');
-        		out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
-        		out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
-        		out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
+                out("Try running 'vendor/bin/paraunit --processes=8 --path=WebDriverDemo.php'", 'success');
+                out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
+                out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
+                out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
         }
     } else {
         out("Sausage successfuly set up!", 'success');
@@ -211,10 +211,10 @@ EOF;
     }
     out("done", 'success');
     if (!$minimal_run) {
-    	if (!$IS_WIN) {
-        	out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
+        if (!$IS_WIN) {
+            out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
         }
-	}
+    }
     if (is_dir("$BASE/vendor")) {
         out("- Updating packages...", NULL, false);
         list($output, $exitcode) = runProcess("$PHP_BIN $BASE/composer.phar update");
@@ -244,14 +244,14 @@ function configureSauce()
     out("- Configuring Sauce...", NULL, false);
 
     list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $SAUCE_USERNAME $SAUCE_ACCESS_KEY");
-	if ($exitcode !== 0) {
-		out('failed', 'error');
-		$FIX = TRUE;
-			if (!$IS_WIN) {
-				out("  Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME ACCESS_KEY manually.", 'info');
-			} else {
-					out("  Sauce configuration failed. Usage: php givememysausage.php <sauceusername> <sauceaccesskey>", 'info');
-			}
+    if ($exitcode !== 0) {
+        out('failed', 'error');
+        $FIX = TRUE;
+            if (!$IS_WIN) {
+                out("  Sauce configuration failed. Please run vendor/bin/sauce_config USERNAME ACCESS_KEY manually.", 'info');
+            } else {
+                    out("  Sauce configuration failed. Usage: php givememysausage.php <sauceusername> <sauceaccesskey>", 'info');
+            }
     } else {
         out('done', 'success');
     }
