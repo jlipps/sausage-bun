@@ -1,5 +1,15 @@
 <?php
 
+// givememysausage.php
+//
+// Usage:
+//
+// php givememysausage.php <sauceusername> <sauceaccesskey>
+//
+// You can find or change your Sauce access key on your Sauce account page:
+//
+// https://saucelabs.com/account
+
 $COMPOSER_INSTALLER = "http://getcomposer.org/installer";
 $DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
 $RC_DEMO_URL = "http://raw.github.com/jlipps/sausage/master/SeleniumRCDemo.php";
@@ -27,7 +37,7 @@ main($argv);
 
 function main($argv)
 {
-    global $IS_WIN, $FIX, $SAUCE_USERNAME, $SAUCE_ACCESS_KEY;
+    global $IS_WIN, $FIX;
 
     $opts = getopt("m::");
     $minimal_run = isset($opts['m']);
@@ -56,7 +66,7 @@ EOF;
     startComposer();
     installPackages($minimal_run);
     if (!$minimal_run) {
-        configureSauce($SAUCE_USERNAME, $SAUCE_ACCESS_KEY);
+        configureSauce();
         downloadDemo();
 		if (!$FIX) {
 			out("- You're all set!");
@@ -227,9 +237,9 @@ EOF;
     }
 }
 
-function configureSauce($SAUCE_USERNAME, $SAUCE_ACCESS_KEY)
+function configureSauce()
 {
-    global $BASE, $IS_WIN, $FIX;
+    global $BASE, $IS_WIN, $SAUCE_USERNAME, $SAUCE_ACCESS_KEY;
 
     out("- Configuring Sauce...", NULL, false);
 
