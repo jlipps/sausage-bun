@@ -71,8 +71,8 @@ EOF;
             out("- Oops! Found an issue...please fix the issue and try again!");
         }
         if (!$IS_WIN) {
-            out("Try running 'vendor/bin/paratest --processes 8 --path WebDriverDemo.php --functional'", 'success');
-            out("  (change to: --path SeleniumRCDemo.php for Selenium 1)", 'success');
+            out("Try running 'vendor/bin/paratest --processes=8 --path=WebDriverDemo.php --functional'", 'success');
+            out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
             out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
             out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
         }
