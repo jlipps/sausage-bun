@@ -27,7 +27,7 @@ main($argv);
 
 function main($argv)
 {
-    global $IS_WIN, $FIX;
+    global $IS_WIN, $FIX, $SAUCE_USERNAME, $SAUCE_ACCESS_KEY;
 
     $opts = getopt("m::");
     $minimal_run = isset($opts['m']);
@@ -56,7 +56,7 @@ EOF;
     startComposer();
     installPackages($minimal_run);
     if (!$minimal_run) {
-        configureSauce();
+        configureSauce($SAUCE_USERNAME, $SAUCE_ACCESS_KEY);
         downloadDemo();
         if (!$FIX) {
             out("- You're all set!");
@@ -227,18 +227,12 @@ EOF;
     }
 }
 
-function configureSauce()
+function configureSauce($SAUCE_USERNAME, $SAUCE_ACCESS_KEY)
 {
-    global $BASE;
-    global $IS_WIN, $SAUCE_USERNAME, $SAUCE_ACCESS_KEY;
-    global $FIX;
+    global $BASE, $IS_WIN, $FIX;
 
     out("- Configuring Sauce...", NULL, false);
 
-    //$u = ($IS_WIN ? $SAUCE_USERNAME : getenv('SAUCE_USERNAME'));
-    //$a = ($IS_WIN ? $SAUCE_ACCESS_KEY : getenv('SAUCE_ACCESS_KEY'));
-
-    //list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $u $a");
     list($output, $exitcode) = runProcess("$BASE/vendor/bin/sauce_config $SAUCE_USERNAME $SAUCE_ACCESS_KEY");
     if ($exitcode !== 0) {
         out('failed', 'error');
