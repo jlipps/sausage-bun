@@ -42,21 +42,18 @@ function main($argv)
     $opts = getopt("m::");
     $minimal_run = isset($opts['m']);
     $msg1 = <<<EOF
+
 Welcome to the Sausage installer!
-\n
 ---------------------------------
-\n
 EOF;
-    out("\n");
     $msg2 = <<<EOF
+
     ( \                 / )
      \ \.-------------./ /
       \(    hot dog!   )/
         `.___________.'
 
-\n
 ---------------------------------
-\n
 EOF;
     out($msg1, 'info');
     if (!$minimal_run)
