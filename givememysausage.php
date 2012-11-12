@@ -28,19 +28,26 @@ $WIN_UNAMES = array(
 $IS_WIN = in_array(php_uname('s'), $WIN_UNAMES);
 $PHP_BIN = PHP_BINDIR.($IS_WIN ? '\\' : '/').'php'.($IS_WIN ? '.exe' : '');
 
-if (count($argv) == 3) {
-    $SAUCE_USERNAME = $argv[1];
-    $SAUCE_ACCESS_KEY = $argv[2];
+$pos_args = array();
+foreach ($argv as $index => $arg) {
+    if ($index != 0 && $arg[0] != "-") {
+        $pos_args[] = $arg;
+    }
+}
+
+if (count($pos_args) == 2) {
+    $SAUCE_USERNAME = $pos_args[0];
+    $SAUCE_ACCESS_KEY = $pos_args[1];
 }
 
 main($argv);
 
 function main($argv)
 {
-    global $IS_WIN, $FIX;
-
-    $opts = getopt("m::");
-    $minimal_run = isset($opts['m']);
+    global $IS_WIN, $FIX, $TUTORIAL, $MINIMAL_RUN;
+    $opts = getopt("m::t::");
+    $MINIMAL_RUN = isset($opts['m']);
+    $TUTORIAL = isset($opts['t']);
     $msg1 = <<<EOF
 
 Welcome to the Sausage installer!
@@ -56,13 +63,13 @@ EOF;
 ---------------------------------
 EOF;
     out($msg1, 'info');
-    if (!$minimal_run)
+    if (!$MINIMAL_RUN)
         out($msg2, 'info');
     checkPHP();
     checkInitialRequirements();
     startComposer();
-    installPackages($minimal_run);
-    if (!$minimal_run) {
+    installPackages();
+    if (!$MINIMAL_RUN) {
         configureSauce();
         downloadDemo();
         if (!$FIX) {
@@ -70,8 +77,12 @@ EOF;
         } else {
             out("- Oops! Found an issue...please fix the issue and try again!");
         }
-        if (!$IS_WIN) {
-            out("Try running 'vendor/bin/paratest --processes=8 --path=WebDriverDemo.php --functional'", 'success');
+        if (!$TUTORIAL) {
+            if ($IS_WIN) {
+                out("Try running 'vendor\\bin\\paratest.bat --processes=8 --path=WebDriverDemo.php --functional'", 'success');
+            } else {
+                out("Try running 'vendor/bin/paratest --processes=8 --path=WebDriverDemo.php --functional'", 'success');
+            }
             out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
             out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
             out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
@@ -178,9 +189,9 @@ EOF;
     out('done', 'success');
 }
 
-function installPackages($minimal_run = false)
+function installPackages()
 {
-    global $BASE, $PHP_BIN, $IS_WIN;
+    global $BASE, $PHP_BIN, $IS_WIN, $MINIMAL_RUN;
     out("- Downloading and unpacking Sausage and dependencies (this may take a while)...", NULL, false);
 
 $json = <<<EOF
@@ -207,7 +218,7 @@ EOF;
         exit($exitcode);
     }
     out("done", 'success');
-    if (!$minimal_run) {
+    if (!$MINIMAL_RUN) {
         if (!$IS_WIN) {
             out("  (You might also want Sauce Connect: add sauce/connect to your composer.json)", 'info');
         }
