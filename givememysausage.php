@@ -79,11 +79,11 @@ EOF;
         }
         if (!$TUTORIAL) {
             if ($IS_WIN) {
-                out("Try running 'vendor\\bin\\paratest.bat --processes=8 --path=WebDriverDemo.php --functional'", 'success');
+                out("Try running 'vendor\\bin\\paratest.bat -p 8 -f --phpunit=vendor\\bin\\phpunit.bat WebDriverDemo.php'", 'success');
             } else {
-                out("Try running 'vendor/bin/paratest --processes=8 --path=WebDriverDemo.php --functional'", 'success');
+                out("Try running 'vendor/bin/paratest -p 8 -f --phpunit=vendor/bin/phpunit WebDriverDemo.php'", 'success');
             }
-            out("  (change to: --path=SeleniumRCDemo.php for Selenium 1)", 'success');
+            out("  (change to: SeleniumRCDemo.php for Selenium 1)", 'success');
             out("Then load https://saucelabs.com/account to see your tests running in parallel", 'success');
             out("Get the most out of Sausage: https://github.com/jlipps/sausage/blob/master/README.md", 'info');
         }
