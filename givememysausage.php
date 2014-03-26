@@ -38,6 +38,9 @@ foreach ($argv as $index => $arg) {
 if (count($pos_args) == 2) {
     $SAUCE_USERNAME = $pos_args[0];
     $SAUCE_ACCESS_KEY = $pos_args[1];
+} else {
+  $SAUCE_USERNAME = getenv('SAUCE_USERNAME');
+  $SAUCE_ACCESS_KEY = getenv('SAUCE_ACCESS_KEY');
 }
 
 main($argv);
