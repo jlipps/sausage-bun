@@ -200,7 +200,7 @@ function installPackages()
 $json = <<<EOF
 {
     "require": {
-        "sauce/sausage": ">=0.12.0"
+        "sauce/sausage": ">=0.14.0"
     }
 }
 EOF;
