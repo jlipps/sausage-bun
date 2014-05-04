@@ -15,13 +15,13 @@ environment variables `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` set beforehand
 for the smoothest experience.
 
 ```
-curl -s https://raw.github.com/jlipps/sausage-bun/master/givememysausage.php | php
+curl -s https://raw.githubusercontent.com/jlipps/sausage-bun/master/givememysausage.php | php
 ```
 
 Or (to automatically configure Sauce as part of the installation):
 
 ```
-curl -s https://raw.github.com/jlipps/sausage-bun/master/givememysausage.php | \
+curl -s https://raw.githubusercontent.com/jlipps/sausage-bun/master/givememysausage.php | \
 SAUCE_USERNAME=xxxx \
 SAUCE_ACCESS_KEY=yyyy \
 php
