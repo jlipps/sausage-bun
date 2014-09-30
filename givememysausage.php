@@ -201,7 +201,8 @@ $json = <<<EOF
 {
     "require": {
         "sauce/sausage": ">=0.15.1"
-    }
+    },
+    "minimum-stability": "dev"
 }
 EOF;
     file_put_contents("$BASE/composer.json", $json);
