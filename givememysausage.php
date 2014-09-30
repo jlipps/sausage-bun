@@ -10,10 +10,10 @@
 //
 // https://saucelabs.com/account
 
-$COMPOSER_INSTALLER = "http://getcomposer.org/installer";
-$DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
-$RC_DEMO_URL = "http://raw.github.com/jlipps/sausage/master/SeleniumRCDemo.php";
-$APP_DEMO_URL = "http://raw.github.com/jlipps/sausage/master/WebDriverDemoShootout.php";
+$COMPOSER_INSTALLER = "https://getcomposer.org/installer";
+$DEMO_URL = "https://raw.github.com/jlipps/sausage/master/WebDriverDemo.php";
+$RC_DEMO_URL = "https://raw.github.com/jlipps/sausage/master/SeleniumRCDemo.php";
+$APP_DEMO_URL = "https://raw.github.com/jlipps/sausage/master/WebDriverDemoShootout.php";
 $BASE = getcwd();
 
 $WIN_UNAMES = array(
@@ -201,8 +201,7 @@ $json = <<<EOF
 {
     "require": {
         "sauce/sausage": ">=0.15.1"
-    },
-    "minimum-stability": "dev"
+    }
 }
 EOF;
     file_put_contents("$BASE/composer.json", $json);
