@@ -15,7 +15,7 @@ environment variables `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` set beforehand
 for the smoothest experience.
 
 ```
-curl -s https://raw.githubusercontent.com/jlipps/sausage-bun/master/givememysausage.php | php
+curl -sL https://raw.githubusercontent.com/jlipps/sausage-bun/master/givememysausage.php | php
 ```
 
 Or (to automatically configure Sauce as part of the installation):
@@ -34,7 +34,7 @@ Check out the [Sausage](http://github.com/jlipps/sausage) page
 Sausage in a bun
 -------
 ```
-   
+
     ( \                 / )
      \ \.-------------./ /
       \(  im in a bun  )/
